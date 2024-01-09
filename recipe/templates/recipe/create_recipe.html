@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Создать рецепт
+{% endblock %}
+
+{% block content %}
+    <h2>Создать рецепт</h2>
+    <form method="post" action="{% url 'create_recipe' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать</button>
+    </form>
+{% endblock %}

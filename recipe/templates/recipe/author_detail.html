@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Детали автора: {{ author.name }}
+{% endblock %}
+
+{% block content %}
+  <h2>{{ author.name }}</h2>
+  <p>Биография: {{ author.bio }}</p>
+
+  {% if author.photo %}
+    <img src="{{ author.photo.url }}" alt="{{ author.name }}">
+  {% endif %}
+
+  <h3>Рецепты автора:</h3>
+  <ul>
+    {% for recipe in author.recipe_set.all %}
+      <li><a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'edit_user' author_id=author.id %}">Изменить пользователя</a>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Главная страница
+{% endblock %}
+
+{% block content %}
+
+    <section class="container text-center">
+        <h3>Повара:</h3><br>
+        <div class="row justify-content-center">
+            {% if chefs %}
+                {% for author in chefs %}
+                    <div class="col-md-4 mb-3 chef-item">
+                        <article class="author">
+                            <div class="card" style="width: 18rem;">
+                                {% if author.photo %}
+                                    <img src="{{ author.photo.url }}" alt="{{ author.name }}">
+                                {% else %}
+                                    <img src="..." class="card-img-top" alt="...">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ author.name }}</h5>
+                                    <p class="card-text">{{ author.bio }}</p>
+                                    <a href="{% url 'author_detail' author.id %}" class="btn btn-primary">Подробнее об авторе</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% if forloop.counter|divisibleby:3 %}<div class="w-100"></div>{% endif %}
+                {% endfor %}
+            {% else %}
+                <p>Нет доступных поворов.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <div class="container d-flex justify-content-center my-3">
+        <h2>Самые популярные рецепты</h2>
+    </div>
+
+    <section>
+
+        {% if recipes %}
+            {% for recipe in recipes %}
+                <div class="card mx-3">
+                    <h5 class="card-header">{{ recipe.title }}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Автор: <a href="{% url 'author_detail' recipe.author.id %}">{{ recipe.author.name }}</a></h5>
+                        <p class="card-text">{{ recipe.description }}</p>
+                        <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary">Ссылка на рецепт</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Нет доступных рецептов.</p>
+        {% endif %}
+
+    </section>
+
+{% endblock %}

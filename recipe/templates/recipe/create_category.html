@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Создать новую категорию
+{% endblock %}
+
+{% block content %}
+    <h2>Создать категорию</h2>
+    <form method="post" action="{% url 'create_category' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать</button>
+    </form>
+
+{% endblock %}

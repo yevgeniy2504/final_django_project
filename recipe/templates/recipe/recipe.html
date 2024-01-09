@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Подробности о рецепте {{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ recipe.title }}</h1>
+
+    {% if recipe.image %}
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+    {% endif %}
+
+    <div>
+        <p>{{ recipe.description }}</p>
+        <p>Ингредиенты: </p>
+
+        <ul>
+            {% for ingredient in ingredients_list %}
+                <li>{{ ingredient.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <p>Инструкции: {{ recipe.directions }}</p>
+        <p>Автор: {{ recipe.author.name }}</p>
+        <p>Категория: {{ recipe.category.name }}</p>
+        <a href="{% url 'index' %}">Назад к списку рецептов</a>
+
+        <form method="post" action="{% url 'delete_recipe' recipe.id %}">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('Вы уверены?')">Удалить рецепт</button>
+        </form>
+        <br>
+
+        <a href="{% url 'edit_recipe' recipe.id %}">Редактировать рецепт</a>
+
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
